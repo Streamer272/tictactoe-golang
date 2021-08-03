@@ -1,11 +1,10 @@
 package main
 
-import (
-	"fmt"
-	"tictactoe/src/field"
-)
+import "tictactoe/src/field"
 
 func main() {
 	f := field.NewField()
-	fmt.Printf("%v\n", f.Boxes[0])
+	f.DisplayField()
+	f.ChangeBox(5, "X")
+	f.DisplayField()
 }
