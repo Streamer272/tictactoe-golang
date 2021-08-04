@@ -25,7 +25,7 @@ func NewField() Field {
 	return f
 }
 
-func (f Field) DisplayField() {
+func (f *Field) DisplayField() {
 	width, height, _ := terminal.GetSize(0)
 
 	for i := 0; i < int((height-5)/2); i++ {
@@ -75,4 +75,42 @@ func (f Field) DisplayField() {
 
 func (f *Field) ChangeBox(index int, value string) {
 	f.Boxes[index].Value = value
+}
+
+/*
+0 | 1 | 2
+3 | 4 | 5
+6 | 7 | 8
+*/
+
+func (f *Field) ChangeSelected(direction int) {
+	if direction == 0 {
+		nextSelected := f.Selected - 3
+
+		if nextSelected >= 0 {
+			f.Selected = nextSelected
+		}
+	} else if direction == 1 {
+		nextSelected := f.Selected + 1
+
+		if nextSelected%3 != 0 {
+			f.Selected = nextSelected
+		}
+	} else if direction == 2 {
+		nextSelected := f.Selected + 3
+
+		if nextSelected <= 8 {
+			f.Selected = nextSelected
+		}
+	} else if direction == 3 {
+		nextSelected := f.Selected - 1
+
+		if (nextSelected-2)%3 != 0 {
+			f.Selected = nextSelected
+		}
+	}
+}
+
+func (f *Field) Select() {
+
 }
