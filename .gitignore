@@ -2,3 +2,7 @@
 /.idea
 /.vscode
 /.vs
+
+# build files
+/build
+main

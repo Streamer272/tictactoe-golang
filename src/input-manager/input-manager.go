@@ -1,19 +1,13 @@
 package input_manager
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-	"strings"
+	"github.com/mattn/go-tty"
 )
 
-func TakeInput() string {
-	reader := bufio.NewReader(os.Stdin)
+func TakeInput() rune {
+	reader, _ := tty.Open()
+	defer reader.Close()
 
-	fmt.Print("-> ")
-	text, _ := reader.ReadString('\n')
-	// convert CRLF to LF
-	text = strings.Replace(text, "\n", "", -1)
-
-	return text
+	r, _ := reader.ReadRune()
+	return r
 }
