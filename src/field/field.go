@@ -3,6 +3,7 @@ package field
 import (
 	"fmt"
 	"golang.org/x/crypto/ssh/terminal"
+	"math/rand"
 )
 
 type Box struct {
@@ -107,17 +108,14 @@ func (f *Field) ChangeSelected(direction int) {
 	}
 }
 
-func (f *Field) Select() {
+func (f *Field) Select() bool {
 	if f.Boxes[f.Selected].Value == "0" {
 		f.Boxes[f.Selected].Value = f.HumanSymbol
+		return true
 	}
-}
 
-/*
-0 | 1 | 2
-3 | 4 | 5
-6 | 7 | 8
-*/
+	return false
+}
 
 func (f *Field) CheckForWinner() string {
 	// rows
@@ -146,4 +144,25 @@ func (f *Field) CheckForWinner() string {
 	}
 
 	return ""
+}
+
+func (f *Field) ChangeRandomBox() {
+	for {
+		random := rand.Intn(8)
+
+		if f.Boxes[random].Value == "0" {
+			f.Boxes[random].Value = f.PcSymbol
+			return
+		}
+	}
+}
+
+func (f *Field) IsFieldEmpty() bool {
+	for i := 0; i < 9; i++ {
+		if f.Boxes[i].Value == "0" {
+			return false
+		}
+	}
+
+	return true
 }
