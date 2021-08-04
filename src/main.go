@@ -7,15 +7,7 @@ import (
 	"tictactoe/src/input-manager"
 )
 
-func main() {
-	// intro
-	fmt.Printf("Welcome to TicTacToe!\n")
-	fmt.Printf("How to play the game:\n")
-	fmt.Printf("    You can use WASD to move your cursor, and ENTER to select\n")
-	fmt.Printf("    You can press \"Q\" to quit the game\n")
-	fmt.Printf("Press any key to start the game!\n\n")
-	input_manager.TakeInput()
-
+func startGame() {
 	// start
 	fmt.Printf("Please enter symbol you want to use: \n")
 	humanSymbol := string(input_manager.TakeInput())
@@ -27,8 +19,10 @@ func main() {
 	f := field.NewField(humanSymbol, pcSymbol)
 	f.DisplayField()
 
-	for {
-		var key rune = input_manager.TakeInput()
+	running := true
+
+	for running {
+		key := input_manager.TakeInput()
 
 		if key == 113 { // q
 			fmt.Printf("Exiting...\n")
@@ -46,5 +40,30 @@ func main() {
 		}
 
 		f.DisplayField()
+
+		winner := f.CheckForWinner()
+		if winner != "" {
+			fmt.Printf("And the winner is... \"%v\"!!\n", winner)
+			running = false
+		}
 	}
+
+	fmt.Printf("Do you want to play again? [Y\\n]\n")
+	key := input_manager.TakeInput()
+	if key == 121 || key == 89 {
+		startGame()
+		return
+	}
+}
+
+func main() {
+	// intro
+	fmt.Printf("Welcome to TicTacToe!\n")
+	fmt.Printf("How to play the game:\n")
+	fmt.Printf("    You can use WASD to move your cursor, and ENTER to select\n")
+	fmt.Printf("    You can press \"Q\" to quit the game\n")
+	fmt.Printf("Press any key to start the game!\n\n")
+	input_manager.TakeInput()
+
+	startGame()
 }

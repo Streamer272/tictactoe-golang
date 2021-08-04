@@ -112,3 +112,38 @@ func (f *Field) Select() {
 		f.Boxes[f.Selected].Value = f.HumanSymbol
 	}
 }
+
+/*
+0 | 1 | 2
+3 | 4 | 5
+6 | 7 | 8
+*/
+
+func (f *Field) CheckForWinner() string {
+	// rows
+	if f.Boxes[0].Value == f.Boxes[1].Value && f.Boxes[1].Value == f.Boxes[2].Value && f.Boxes[0].Value != "0" {
+		return f.Boxes[0].Value
+	} else if f.Boxes[3].Value == f.Boxes[4].Value && f.Boxes[4].Value == f.Boxes[5].Value && f.Boxes[3].Value != "0" {
+		return f.Boxes[3].Value
+	} else if f.Boxes[6].Value == f.Boxes[7].Value && f.Boxes[7].Value == f.Boxes[8].Value && f.Boxes[6].Value != "0" {
+		return f.Boxes[6].Value
+	}
+
+	// columns
+	if f.Boxes[0].Value == f.Boxes[3].Value && f.Boxes[3].Value == f.Boxes[6].Value && f.Boxes[0].Value != "0" {
+		return f.Boxes[0].Value
+	} else if f.Boxes[1].Value == f.Boxes[4].Value && f.Boxes[4].Value == f.Boxes[7].Value && f.Boxes[1].Value != "0" {
+		return f.Boxes[1].Value
+	} else if f.Boxes[2].Value == f.Boxes[5].Value && f.Boxes[5].Value == f.Boxes[8].Value && f.Boxes[2].Value != "0" {
+		return f.Boxes[2].Value
+	}
+
+	// other
+	if f.Boxes[0].Value == f.Boxes[4].Value && f.Boxes[4].Value == f.Boxes[8].Value && f.Boxes[0].Value != "0" {
+		return f.Boxes[0].Value
+	} else if f.Boxes[2].Value == f.Boxes[4].Value && f.Boxes[4].Value == f.Boxes[6].Value && f.Boxes[2].Value != "0" {
+		return f.Boxes[2].Value
+	}
+
+	return ""
+}
