@@ -8,26 +8,18 @@ import (
 )
 
 func main() {
-	f := field.NewField()
+	fmt.Printf("Please enter symbol you want to use: \n")
+	humanSymbol := string(input_manager.TakeInput())
+	fmt.Printf("Entered %v...\n", humanSymbol)
+	fmt.Printf("Please enter symbol you want computer to use: \n")
+	pcSymbol := string(input_manager.TakeInput())
+	fmt.Printf("Entered %v...\n", pcSymbol)
+
+	f := field.NewField(humanSymbol, pcSymbol)
 	f.DisplayField()
 
 	for {
 		var key rune = input_manager.TakeInput()
-
-		/*
-		Key press => q
-		113
-		Key press => w
-		119
-		Key press => d
-		100
-		Key press => a
-		97
-		Key press => s
-		115
-		Key press =>
-		13
-		*/
 
 		if key == 113 {
 			fmt.Printf("Exiting...\n")

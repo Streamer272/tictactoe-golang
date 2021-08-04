@@ -11,12 +11,14 @@ type Box struct {
 }
 
 type Field struct {
-	Boxes    [9]Box
-	Selected int
+	Boxes       [9]Box
+	Selected    int
+	HumanSymbol string
+	PcSymbol    string
 }
 
-func NewField() Field {
-	f := Field{Selected: 4}
+func NewField(humanSymbol string, pcSymbol string) Field {
+	f := Field{Selected: 4, HumanSymbol: humanSymbol, PcSymbol: pcSymbol}
 
 	for i := 0; i < 9; i++ {
 		f.Boxes[i] = Box{i, "0"}
@@ -77,12 +79,6 @@ func (f *Field) ChangeBox(index int, value string) {
 	f.Boxes[index].Value = value
 }
 
-/*
-0 | 1 | 2
-3 | 4 | 5
-6 | 7 | 8
-*/
-
 func (f *Field) ChangeSelected(direction int) {
 	if direction == 0 {
 		nextSelected := f.Selected - 3
@@ -112,5 +108,7 @@ func (f *Field) ChangeSelected(direction int) {
 }
 
 func (f *Field) Select() {
-
+	if f.Boxes[f.Selected].Value == "0" {
+		f.Boxes[f.Selected].Value = f.HumanSymbol
+	}
 }
