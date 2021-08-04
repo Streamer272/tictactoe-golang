@@ -11,9 +11,11 @@ func GetHumanSymbol() string {
 	fmt.Printf("Please enter symbol you want to use: \n")
 	humanSymbol := string(input_manager.TakeInput())
 
-	if string(humanSymbol) == "0" || string(humanSymbol) == "\n" {
+	if humanSymbol == "0" {
 		fmt.Printf("Sorry, that is not a valid symbol. Please enter another symbol...\n")
 		humanSymbol = GetHumanSymbol()
+	} else if humanSymbol == "\r" {
+		humanSymbol = "X"
 	}
 
 	return humanSymbol
@@ -23,9 +25,11 @@ func GetPcSymbol() string {
 	fmt.Printf("Please enter symbol you want pc to use: \n")
 	pcSymbol := string(input_manager.TakeInput())
 
-	if string(pcSymbol) == "0" || string(pcSymbol) == "\n" {
+	if string(pcSymbol) == "0" {
 		fmt.Printf("Sorry, that is not a valid symbol. Please enter another symbol...\n")
 		pcSymbol = GetPcSymbol()
+	} else if string(pcSymbol) == "\r" {
+		pcSymbol = "O"
 	}
 
 	return pcSymbol
@@ -72,7 +76,7 @@ func StartGame(humanSymbol string, pcSymbol string) {
 		}
 
 		isFieldEmpty := f.IsFieldEmpty()
-		if isFieldEmpty {
+		if isFieldEmpty && running {
 			fmt.Printf("Field is full, no one is winner...\n")
 			running = false
 		}
@@ -86,7 +90,7 @@ func StartGame(humanSymbol string, pcSymbol string) {
 	fmt.Printf("Do you want to play again? [Y\\n] ")
 	key := input_manager.TakeInput()
 	fmt.Printf("\n")
-	if key == 121 || key == 89 {
+	if key == 121 || key == 89 || key == 13 {
 		StartGame(humanSymbol, pcSymbol)
 		return
 	}
@@ -100,5 +104,20 @@ func main() {
 	fmt.Printf("Press any key to start the game!\n\n")
 	input_manager.TakeInput()
 
-	StartGame(GetHumanSymbol(), GetPcSymbol())
+	var (
+		humanSymbol string
+		pcSymbol string
+	)
+
+	for {
+		humanSymbol = GetHumanSymbol()
+		pcSymbol = GetPcSymbol()
+		if humanSymbol == pcSymbol {
+			fmt.Printf("Two symbols can't be the same!\n")
+		} else {
+			break
+		}
+	}
+
+	StartGame(humanSymbol, pcSymbol)
 }
